@@ -20,10 +20,10 @@ class Form extends Component {
       name: this.state.name,
       number: this.state.number,
     });
-       this.setState({
-         name: "",
-         number: "",
-       });
+    this.setState({
+      name: "",
+      number: "",
+    });
   };
   render() {
     // console.log('this.props :>> ', this.props);
@@ -32,7 +32,7 @@ class Form extends Component {
         <SectionTitle title="PhoneBook">
           <h2 className="title">PhoneBook</h2>
         </SectionTitle>
-        <form  onSubmit={this.onHandleSubmit}>
+        <form onSubmit={this.onHandleSubmit}>
           <label>
             Name
             <input

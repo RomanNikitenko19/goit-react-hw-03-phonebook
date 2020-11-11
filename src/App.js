@@ -9,17 +9,29 @@ class App extends Component {
     filterPhoneBook: "",
   };
 
+  componentDidMount() {
+    console.log("componentDidMount");
+    if (localStorage.getItem("phoneBook")) {
+      this.setState({
+        contacts: [...JSON.parse(localStorage.getItem("phoneBook"))],
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem("phoneBook", JSON.stringify(this.state.contacts));
+    }
+  }
+
+  componentWillUnmount() {
+    console.log("componentWillUnmount");
+  }
+
   getFilterValue = (e) => {
     this.setState({ filterPhoneBook: e.target.value });
   };
-
-  // setLocalStorage = () => {
-  //   return localStorage.setItem('phoneBook', JSON.stringify());
-  // };
-
-  // getLocalStorage = () => {
-  //   return JSON.parse(localStorage.getItem('phoneBook'));
-  // };
 
   addContact = (contact) => {
     this.state.contacts.some((elem) => elem.name === contact.name)
@@ -44,7 +56,7 @@ class App extends Component {
   render() {
     return (
       <>
-        <div className='container'>
+        <div className="container">
           <Form addContact={this.addContact} />
           <Filter getFilterValue={this.getFilterValue} filterPhoneBook={this.state.filterPhoneBook} />
           <ContactsList contacts={this.filterContactList()} deleteContact={this.deleteContact} />
@@ -56,6 +68,3 @@ class App extends Component {
 
 export default App;
 
-// const getFilt = () => {
-//   return this.state.contacts.filter(contact => contact.name.toLowerCase().includes(this.state.filterPhoneBook.toLowerCase()))
-// }

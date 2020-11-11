@@ -5,6 +5,7 @@ import "./ContactsList.css";
 
 const ContactsList = (props) => {
   const { contacts, deleteContact } = props;
+
   return (
     <>
       <SectionTitle>
