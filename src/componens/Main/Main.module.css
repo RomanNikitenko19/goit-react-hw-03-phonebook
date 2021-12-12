@@ -1,0 +1,35 @@
+.container {
+  width: 1200px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin: 0 auto;
+}
+
+.Main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 0;
+}
+
+input,
+button {
+  display: inline-block;
+  min-width: 200px;
+  padding-top: 10px;
+  padding-right: 22px;
+  padding-bottom: 10px;
+  padding-left: 22px;
+
+  border-radius: 6px;
+  margin: 10px;
+  background-color: silver;
+}
+
+input:hover,
+input:focus,
+button:hover,
+button:focus {
+  background-color:  whitesmoke;
+}
