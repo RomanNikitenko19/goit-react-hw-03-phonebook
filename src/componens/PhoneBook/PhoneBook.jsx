@@ -2,7 +2,9 @@ import { nanoid } from 'nanoid';
 import { Component } from "react";
 import Contacts from "../Contacts";
 import PhoneBookForm from "../PhoneBookForm";
+import * as localStorage from "../../services/localStorage";
 
+const LOCALSTORAGE_KEY = "PhoneBook_contacts";
 class PhoneBook extends Component {
   state = {
     contacts: [
@@ -33,31 +35,47 @@ class PhoneBook extends Component {
     }));
   };
 
-  checkName = value => this.state.contacts.some(({ name }) => name === value);
+  checkName = (value) => this.state.contacts.some(({ name }) => name === value);
 
   filterContacts = () => {
     const { contacts, filter } = this.state;
     return contacts.filter((item) => item.name.toLowerCase().includes(filter.toLowerCase()));
   };
 
-  deleteContacts = id => {
+  deleteContacts = (id) => {
     this.setState((prevState) => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== id),
+      contacts: prevState.contacts.filter((contact) => contact.id !== id),
     }));
   };
 
+  componentDidMount() {
+    const phoneBook = localStorage.get(LOCALSTORAGE_KEY)
+    if (phoneBook) {
+      this.setState({ contacts:  phoneBook});
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const { contacts } = this.state;
+    if (contacts !== prevState.contacts) {
+      localStorage.save(LOCALSTORAGE_KEY, contacts);
+    }
+  }
+
   render() {
-    const { filter } = this.state;
+    const { filter, contacts } = this.state;
 
     return (
       <>
         <PhoneBookForm addContacts={this.addContacts} />
-        <Contacts
-          filterContacts={this.filterContacts()}
-          handleChange={this.handleChange}
-          filter={filter}
-          deleteContacts={this.deleteContacts}
-        />
+        {Boolean(contacts.length) && (
+          <Contacts
+            filterContacts={this.filterContacts()}
+            handleChange={this.handleChange}
+            filter={filter}
+            deleteContacts={this.deleteContacts}
+          />
+        )}
       </>
     );
   }
