@@ -70,6 +70,7 @@ class PhoneBook extends Component {
         <PhoneBookForm addContacts={this.addContacts} />
         {Boolean(contacts.length) && (
           <Contacts
+            contacts={contacts}
             filterContacts={this.filterContacts()}
             handleChange={this.handleChange}
             filter={filter}
